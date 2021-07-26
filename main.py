@@ -1,9 +1,8 @@
 from os import name
 from telegram.ext import *
 import logging
-import DBPedia as dbpedia
+import ConsultaDBPedia as dbpedia
 import ConsultaLoxaPizza as botLoxa
-#import demo_spacy as analysis
 import ResponseOwl as RespOwl
 import Respuesta
 
@@ -60,15 +59,8 @@ def ingredients_command(update, context):
 
 def pizza_command(update, context):
     update.message.reply_text(
-        "Puedes encontrar información de las siguientes pizzas :"
-        "\n\nPizza_al_taglio"
-        "\nDetroit-style_pizza"
-        "\nNeapolitan_pizza"
-        "\nDeep-fried_pizza"
-        "\nDeep-fried_pizza"
-        "\nItalian_tomato_pie"
-        "\nSicilian_pizza"
-        "\nChicago-style_pizza"
+#        "Puedes encontrar información de las siguientes pizzas :"
+#        "\nNeapolitan_pizza"
     )
 
 
@@ -82,7 +74,7 @@ def start_command(update, context):
         "\n/listPizzaLoxa -> Lista de pizzas de Loxa Pizza"
         "\n/pizza -> Lista de las pizzas que se puede buscar"
         "\n/ingredientes -> lista de los ingredientes de la pizza"
-        "\n/Q&A -> Preguntas frecuentas"
+        "\n/infomacion -> Preguntas frecuentas"
         )
 
 
@@ -153,18 +145,16 @@ if __name__ == '__main__':
     dp = updater.dispatcher
 
     # Commands
-    dp.add_handler(CommandHandler('start', start_command))
+    # dp.add_handler(CommandHandler('start', start_command))
     dp.add_handler(CommandHandler('menu', menu_command))
     dp.add_handler(CommandHandler('listPizzaDb', types_command_dbpedia))
     dp.add_handler(CommandHandler('listPizzaLoxa', types_command_botLoxa))
     dp.add_handler(CommandHandler('pizza', pizza_command))
     dp.add_handler(CommandHandler('ingredientes', ingredients_command, pass_args=True))
-    dp.add_handler(CommandHandler('Q&A', help_command))
-
+    dp.add_handler(CommandHandler('infomacion', help_command))
 
     dp.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
     dp.add_handler(CallbackQueryHandler(first_menu, pattern='m1'))
-    dp.add_handler(CallbackQueryHandler(second_menu, pattern='m2'))
 
     # Messages
     dp.add_handler(MessageHandler(Filters.text, handle_message))
